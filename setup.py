@@ -8,7 +8,7 @@ setup(
       version=__version__,
       description='Library features for Wagtail',
       author='Omni Digital',
-      author_email='dev@@omni-digital.co.uk',
+      author_email='dev@omni-digital.co.uk',
       url='https://github.com/omni-digital/omni-wagtail-library',
       download_url='https://github.com/omni-digital/omni-wagtail-library/tarball/0.1.0',
       packages=find_packages(exclude=['app']),
