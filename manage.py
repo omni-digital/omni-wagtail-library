@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Management script for wagtail_temporal_content project
+Management script for the project
 """
 from __future__ import absolute_import, unicode_literals
 import os
