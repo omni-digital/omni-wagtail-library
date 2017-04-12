@@ -9,6 +9,7 @@ addons:
       - deadsnakes
     packages:
       - python3.5
+      - python3.6
 env:
   - TOXENV=py27-wagtail15
   - TOXENV=py34-wagtail15
