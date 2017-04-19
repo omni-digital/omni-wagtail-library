@@ -89,9 +89,7 @@ class AbstractLibraryItemDetailPage(Page):
     """
 
     attachment = models.FileField(upload_to='attachments')
-    # display_date = models.DateTimeField()
     content_panels = Page.content_panels + [
-        # FieldPanel('display_date'),
         FieldPanel('attachment'),
     ]
 
@@ -101,6 +99,7 @@ class AbstractLibraryItemDetailPage(Page):
         """
         abstract = True
 
+
 class LibraryItemDetailPage(AbstractLibraryItemDetailPage):
     """
     Library item detail page
@@ -109,6 +108,5 @@ class LibraryItemDetailPage(AbstractLibraryItemDetailPage):
     parent_page_types = ['LibraryListingPage']
     content_panels = Page.content_panels + [
         FieldPanel('content', classname="full"),
-        # FieldPanel('display_date'),
         FieldPanel('attachment'),
     ]

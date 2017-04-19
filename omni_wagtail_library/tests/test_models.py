@@ -34,7 +34,7 @@ class TestCaseStub(TestCase):
     def get_file():
         """
         Dummy file handler
-        
+
         :return: File instance ready to be used in django models
         """
         return SimpleUploadedFile(
@@ -45,8 +45,8 @@ class TestCaseStub(TestCase):
     def create_detail_factory(self, **kwargs):
         """
         Create factory of the `self.item_model` from the default parameters
-        :param kwargs: 
-        :return: 
+        :param kwargs:
+        :return: Created factory
         """
         def get_value(key, default):
             val = kwargs.get(key)
