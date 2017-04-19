@@ -1,0 +1,44 @@
+{% load wagtailcore_tags %}
+
+<h1>
+    Library listing page: {{ page }}
+</h1>
+
+{% if children %}
+    <ul>
+        {% for child in children %}
+            <li>
+                {% if request.is_preview %}
+                    <a href="{% pageurl child %}">
+                        {{ child }}
+                        {% if not child.live %}
+                            <em>(not public)</em>
+                        {% endif %}
+                    </a>
+                {% else %}
+                    {% if child.live %}
+                        <a href="{% pageurl child %}">
+                            {{ child }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<ul>
+    <li>
+        {% if children.has_previous %}
+            <a href="./?page={{ children.previous_page_number }}">previous</a>
+        {% endif %}
+
+
+        Page {{ children.number }} of {{ children.paginator.num_pages }}.
+
+
+        {% if children.has_next %}
+            <a href="./?page={{ children.next_page_number }}">next</a>
+        {% endif %}
+    </li>
+</ul>

@@ -1,0 +1,13 @@
+{% load wagtailcore_tags %}
+
+<a href="{% pageurl page.get_parent %}">&laquo;{{ page.get_parent }}</a>
+
+<h1>
+    Library Item detail page: {{ page.title }}
+</h1>
+
+{{ page.description|linebreaks }}
+
+<a href="{{ page.attachment.url }}">
+    {{ page.attachment.name }}
+</a>
