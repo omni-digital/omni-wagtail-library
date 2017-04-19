@@ -1,6 +1,6 @@
 # -*- coding:utf8 -*-
 """
-
+Application models
 """
 
 from __future__ import unicode_literals
@@ -17,19 +17,21 @@ class LibraryListingPage(Page):
     """
     Common features
     """
+    content = RichTextField()
     paginate_by = models.PositiveIntegerField(
         blank=True,
         null=True
     )
 
     content_panels = Page.content_panels + [
+        FieldPanel('content'),
         FieldPanel('paginate_by'),
     ]
 
     def _get_children(self, request):
         """
         Helper method for getting child nodes to display in the listing
-        :param is_preview: True if content is being previewed, otherwise false
+        :param request: django request
         :return: Queryset of child model instances
         """
         model_class = self.__class__.allowed_subpage_models()[0]
