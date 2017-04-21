@@ -13,20 +13,24 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import RichTextField
 
 
-class LibraryListingPage(Page):
+class AbstractLibraryListingPage(Page):
     """
-    Common features
+    Abstract library listing page
     """
-    content = RichTextField()
     paginate_by = models.PositiveIntegerField(
         blank=True,
         null=True
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel('content'),
         FieldPanel('paginate_by'),
     ]
+
+    class Meta(object):
+        """
+        Django model meta options
+        """
+        abstract = True
 
     def _get_children(self, request):
         """
@@ -64,7 +68,7 @@ class LibraryListingPage(Page):
         :param kwargs: default keyword args
         :return: Context data to use when rendering the template
         """
-        context = super(LibraryListingPage, self).get_context(request, *args, **kwargs)
+        context = super(AbstractLibraryListingPage, self).get_context(request, *args, **kwargs)
         queryset = children = self._get_children(request)
         is_paginated = False
         paginator = None
@@ -81,6 +85,18 @@ class LibraryListingPage(Page):
             is_paginated=is_paginated
         )
         return context
+
+
+class LibraryListingPage(AbstractLibraryListingPage):
+    """
+    Common features
+    """
+    content = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel('content'),
+        FieldPanel('paginate_by'),
+    ]
 
 
 class AbstractLibraryItemDetailPage(Page):
