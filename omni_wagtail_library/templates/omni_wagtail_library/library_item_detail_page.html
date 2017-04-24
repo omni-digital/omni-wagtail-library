@@ -1,12 +1,20 @@
 {% load wagtailcore_tags %}
+{% load i18n %}
 
 <a href="{% pageurl page.get_parent %}">&laquo;{{ page.get_parent }}</a>
 
 <h1>
-    Library Item detail page: {{ page.title }}
+    {% trans "Library Item detail page" %}: {{ page.title }}
 </h1>
 
 {{ page.description|linebreaks }}
+
+<h2>
+    {% trans "Related library items" %}
+</h2>
+{% include_block page.content %}
+
+<hr>
 
 <a href="{{ page.attachment.url }}">
     {{ page.attachment.name }}

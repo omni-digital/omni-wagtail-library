@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+{% load i18n %}
+
+<h2>{% trans "Library items" %}</h2>
+
+<div>
+
+    <a href="{{ value.attachment.url }}">
+        {{ value.title }} (<em>{{ value.attachment }}</em>)
+    </a>
+
+</div>
