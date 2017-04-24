@@ -8,9 +8,10 @@ from __future__ import unicode_literals
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.wagtailcore.blocks import PageChooserBlock
+from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page
-from wagtail.wagtailcore.fields import RichTextField
 
 
 class AbstractLibraryListingPage(Page):
@@ -116,13 +117,21 @@ class AbstractLibraryItemDetailPage(Page):
         abstract = True
 
 
+class LibraryItemBlock(PageChooserBlock):
+
+    def __init__(self, **kwargs):
+        self._target_model = 'omni_wagtail_library.LibraryItemDetailPage'
+        self._template = 'omni_wagtail_library/library_item_block.html'
+        super(LibraryItemBlock, self).__init__(**kwargs)
+
+
 class LibraryItemDetailPage(AbstractLibraryItemDetailPage):
     """
     Library item detail page
     """
-    content = RichTextField()
+    content = StreamField([('content', LibraryItemBlock())], blank=True, null=True)
     parent_page_types = ['LibraryListingPage']
     content_panels = Page.content_panels + [
-        FieldPanel('content', classname="full"),
+        StreamFieldPanel('content'),
         FieldPanel('attachment'),
     ]
