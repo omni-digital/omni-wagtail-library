@@ -118,11 +118,18 @@ class AbstractLibraryItemDetailPage(Page):
 
 
 class LibraryItemBlock(PageChooserBlock):
-
-    def __init__(self, **kwargs):
-        self._target_model = 'omni_wagtail_library.LibraryItemDetailPage'
+    """
+    Library Item chooser block for streamfield
+    """
+    def __init__(self, target_model='omni_wagtail_library.LibraryItemDetailPage', **kwargs):
+        """
+        Initialization code 
+        
+        :param target_model: default selection model - can be overriden in model
+        :param kwargs: default block kwargs
+        """
         self._template = 'omni_wagtail_library/library_item_block.html'
-        super(LibraryItemBlock, self).__init__(**kwargs)
+        super(LibraryItemBlock, self).__init__(target_model, **kwargs)
 
 
 class LibraryItemDetailPage(AbstractLibraryItemDetailPage):
