@@ -98,6 +98,7 @@ class LibraryListingPage(AbstractLibraryListingPage):
         FieldPanel('content'),
         FieldPanel('paginate_by'),
     ]
+    subpage_types = ['omni_wagtail_library.LibraryItemDetailPage']
 
 
 class AbstractLibraryItemDetailPage(Page):
