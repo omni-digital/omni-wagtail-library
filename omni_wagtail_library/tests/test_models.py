@@ -11,7 +11,8 @@ from django.template.defaultfilters import slugify
 from django.test import RequestFactory, TestCase, override_settings
 from django.utils.crypto import get_random_string
 
-from omni_wagtail_library.models import LibraryListingPage, LibraryItemDetailPage
+from omni_wagtail_library.models import LibraryListingPage, LibraryItemDetailPage, LibraryItemBlock
+from wagtail.wagtailcore.blocks import PageChooserBlock
 from wagtail.wagtailcore.models import Page
 
 
@@ -157,3 +158,20 @@ class LibraryListingPageSimpleTestCase(TestCaseStub):
         queryset = self.listing_page._get_children(self.production_request)
         response = self.listing_page._paginate_queryset(queryset, 666)
         self.assertEqual(response[0].paginator.num_pages, response[0].number)
+
+
+class LibraryItemBlockTestCase(TestCase):
+    """
+    Testing stub for temporal content
+    """
+    def test_inheritance(self):
+        """
+        The block should subclass PageChooserBlock
+        """
+        self.assertTrue(issubclass(LibraryItemBlock, PageChooserBlock))
+
+    def test_template(self):
+        """
+        The block should use the correct template
+        """
+        self.assertEqual(LibraryItemBlock._meta_class.template, 'omni_wagtail_library/library_item_block.html')
