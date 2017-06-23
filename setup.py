@@ -28,6 +28,7 @@ def find_version(*file_paths):
         return version_match.group(1)
     raise RuntimeError("Unable to find version string.")
 
+
 # Get the version of the project
 _version = find_version('omni_wagtail_library', '__init__.py')
 

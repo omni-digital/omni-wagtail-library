@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.wagtailcore.blocks import PageChooserBlock, RichTextBlock
+from wagtail.wagtailcore.blocks import RichTextBlock, PageChooserBlock
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.blocks import ImageChooserBlock
@@ -119,21 +119,6 @@ class AbstractLibraryItemDetailPage(Page):
         abstract = True
 
 
-class LibraryItemBlock(PageChooserBlock):
-    """
-    Library Item chooser block for streamfield
-    """
-    def __init__(self, target_model='omni_wagtail_library.LibraryItemDetailPage', **kwargs):
-        """
-        Initialization code 
-        
-        :param target_model: default selection model - can be overriden in model
-        :param kwargs: default block kwargs
-        """
-        self._template = 'omni_wagtail_library/library_item_block.html'
-        super(LibraryItemBlock, self).__init__(target_model, **kwargs)
-
-
 class LibraryItemDetailPage(AbstractLibraryItemDetailPage):
     """
     Library item detail page
@@ -147,3 +132,23 @@ class LibraryItemDetailPage(AbstractLibraryItemDetailPage):
         StreamFieldPanel('content'),
         FieldPanel('attachment'),
     ]
+
+
+class LibraryItemBlock(PageChooserBlock):
+    """
+    Library Item chooser block for streamfield
+    """
+    def __init__(self, target_model='omni_wagtail_library.LibraryItemDetailPage', **kwargs):
+        """
+        Initialization code
+
+        :param target_model: default selection model - can be overriden in model
+        :param kwargs: default block kwargs
+        """
+        super(LibraryItemBlock, self).__init__(target_model, **kwargs)
+
+    class Meta(object):
+        """
+        Block meta
+        """
+        template = 'omni_wagtail_library/library_item_block.html'
