@@ -4,19 +4,20 @@ Tests the application models
 """
 from __future__ import unicode_literals
 
+import os
+
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.test import RequestFactory, TestCase, override_settings
 from django.utils.crypto import get_random_string
-
-from omni_wagtail_library.models import LibraryListingPage, LibraryItemDetailPage, LibraryItemBlock
 from wagtail.wagtailcore.blocks import PageChooserBlock
+from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page
 
+from omni_wagtail_library import models as library_models
 
-import os
 
 BASE_DIR = os.path.join(settings.PROJECT_DIR, 'omni_wagtail_library/tests/assets')
 FAKE_PATH = '/{0}/'.format(get_random_string())
@@ -28,8 +29,8 @@ class TestCaseStub(TestCase):
     Testing stub for temporal content
     """
 
-    listing_model = LibraryListingPage
-    item_model = LibraryItemDetailPage
+    listing_model = library_models.LibraryListingPage
+    item_model = library_models.LibraryItemDetailPage
 
     @staticmethod
     def get_file():
@@ -94,7 +95,7 @@ class LibraryListingPageSimpleTestCase(TestCaseStub):
     Tests the LibraryListingPage
     """
 
-    model = LibraryListingPage
+    model = library_models.LibraryListingPage
 
     def setUp(self):
         """
@@ -160,6 +161,38 @@ class LibraryListingPageSimpleTestCase(TestCaseStub):
         self.assertEqual(response[0].paginator.num_pages, response[0].number)
 
 
+class TestLibraryItemDetailPage(TestCase):
+    """Test for the LibraryItemDetailPage."""
+    def setUp(self):
+        super(TestLibraryItemDetailPage, self).setUp()
+        self.model = library_models.LibraryItemDetailPage
+
+    def test_inheritance(self):
+        """LibraryItemDetailPage should subclass AbstractLibraryItemDetailPage."""
+        self.assertTrue(issubclass(
+            self.model,
+            library_models.AbstractLibraryItemDetailPage
+        ))
+
+    def test_content_field(self):
+        """The content field should be an instance of StreamField."""
+        field = self.model._meta.get_field('content')
+
+        self.assertIsInstance(field, StreamField)
+
+    def test_teaser_field(self):
+        """The teaser field should be an instance of CharField."""
+        field = self.model._meta.get_field('teaser')
+
+        self.assertIsInstance(field, models.CharField)
+
+    def test_teaser_image_field(self):
+        """The teaser_image field should be an instance of ForeignKey."""
+        field = self.model._meta.get_field('teaser_image')
+
+        self.assertIsInstance(field, models.ForeignKey)
+
+
 class LibraryItemBlockTestCase(TestCase):
     """
     Testing stub for temporal content
@@ -168,10 +201,13 @@ class LibraryItemBlockTestCase(TestCase):
         """
         The block should subclass PageChooserBlock
         """
-        self.assertTrue(issubclass(LibraryItemBlock, PageChooserBlock))
+        self.assertTrue(issubclass(library_models.LibraryItemBlock, PageChooserBlock))
 
     def test_template(self):
         """
         The block should use the correct template
         """
-        self.assertEqual(LibraryItemBlock._meta_class.template, 'omni_wagtail_library/library_item_block.html')
+        self.assertEqual(
+            library_models.LibraryItemBlock._meta_class.template,
+            'omni_wagtail_library/library_item_block.html'
+        )
