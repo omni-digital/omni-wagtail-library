@@ -4,19 +4,20 @@ Tests the application models
 """
 from __future__ import unicode_literals
 
+import os
+
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.test import RequestFactory, TestCase, override_settings
 from django.utils.crypto import get_random_string
-
-from omni_wagtail_library.models import LibraryListingPage, LibraryItemDetailPage, LibraryItemBlock
-from wagtail.wagtailcore.blocks import PageChooserBlock
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.fields import StreamField
 
+from omni_wagtail_library import abstract_models
+from omni_wagtail_library.models import LibraryListingPage, LibraryItemDetailPage
 
-import os
 
 BASE_DIR = os.path.join(settings.PROJECT_DIR, 'omni_wagtail_library/tests/assets')
 FAKE_PATH = '/{0}/'.format(get_random_string())
@@ -104,6 +105,14 @@ class LibraryListingPageSimpleTestCase(TestCaseStub):
         self.preview_request = self.get_request(preview=True)
         self.production_request = self.get_request(preview=False)
 
+    def test_inheritance(self):
+        """LibraryListingPage should subclass AbstractLibraryListingPage."""
+        self.assertTrue(issubclass(self.model, Page))
+        self.assertTrue(issubclass(
+            self.model,
+            abstract_models.AbstractLibraryListingPage
+        ))
+
     def get_request(self, preview):
         request = RequestFactory().get(FAKE_PATH)
         request.is_preview = preview
@@ -160,18 +169,22 @@ class LibraryListingPageSimpleTestCase(TestCaseStub):
         self.assertEqual(response[0].paginator.num_pages, response[0].number)
 
 
-class LibraryItemBlockTestCase(TestCase):
-    """
-    Testing stub for temporal content
-    """
-    def test_inheritance(self):
-        """
-        The block should subclass PageChooserBlock
-        """
-        self.assertTrue(issubclass(LibraryItemBlock, PageChooserBlock))
+class TestLibraryItemDetailPage(TestCase):
+    """Test for the LibraryItemDetailPage."""
+    def setUp(self):
+        super(TestLibraryItemDetailPage, self).setUp()
+        self.model = LibraryItemDetailPage
 
-    def test_template(self):
-        """
-        The block should use the correct template
-        """
-        self.assertEqual(LibraryItemBlock._meta_class.template, 'omni_wagtail_library/library_item_block.html')
+    def test_inheritance(self):
+        """LibraryItemDetailPage should subclass AbstractLibraryItemDetailPage."""
+        self.assertTrue(issubclass(self.model, Page))
+        self.assertTrue(issubclass(
+            self.model,
+            abstract_models.AbstractLibraryItemDetailPage
+        ))
+
+    def test_content_field(self):
+        """The content field should be an instance of StreamField."""
+        field = self.model._meta.get_field('content')
+
+        self.assertIsInstance(field, StreamField)
