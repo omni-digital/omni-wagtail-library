@@ -13,6 +13,7 @@ from wagtail.wagtailcore.blocks import RichTextBlock, PageChooserBlock
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.blocks import ImageChooserBlock
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 class AbstractLibraryListingPage(Page):
@@ -123,14 +124,34 @@ class LibraryItemDetailPage(AbstractLibraryItemDetailPage):
     """
     Library item detail page
     """
-    content = StreamField([
-        ('paragraph', RichTextBlock()),
-        ('image', ImageChooserBlock())
-    ], blank=True, null=True)
+    content = StreamField(
+        [('paragraph', RichTextBlock()), ('image', ImageChooserBlock())],
+        blank=True,
+        null=True,
+    )
+    teaser = models.CharField(
+        blank=True,
+        help_text='A short extract of text, to be displayed when this appears in a list',
+        max_length=400,
+        null=True,
+    )
+    teaser_image = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
     parent_page_types = ['LibraryListingPage']
+
     content_panels = Page.content_panels + [
         StreamFieldPanel('content'),
         FieldPanel('attachment'),
+    ]
+    promote_panels = Page.promote_panels + [
+        FieldPanel('teaser'),
+        ImageChooserPanel('teaser_image'),
     ]
 
 
