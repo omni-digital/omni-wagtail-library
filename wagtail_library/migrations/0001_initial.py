@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
-import omni_wagtail_library.models
+import wagtail_library.models
 import wagtail.wagtailcore.fields
 
 
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('attachment', models.FileField(upload_to='attachments')),
-                ('content', wagtail.wagtailcore.fields.StreamField((('content', omni_wagtail_library.blocks.LibraryItemBlock()),), blank=True, null=True)),
+                ('body', wagtail.wagtailcore.fields.RichTextField()),
             ],
             options={
                 'abstract': False,
@@ -30,11 +30,11 @@ class Migration(migrations.Migration):
             bases=('wagtailcore.page',),
         ),
         migrations.CreateModel(
-            name='LibraryListingPage',
+            name='LibraryIndexPage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('paginate_by', models.PositiveIntegerField(blank=True, null=True)),
-                ('content', wagtail.wagtailcore.fields.RichTextField()),
+                ('body', wagtail.wagtailcore.fields.RichTextField()),
             ],
             options={
                 'abstract': False,
