@@ -30,17 +30,17 @@ def find_version(*file_paths):
 
 
 # Get the version of the project
-_version = find_version('omni_wagtail_library', '__init__.py')
+_version = find_version('wagtail_library', '__init__.py')
 
 setup(
-      name='omni_wagtail_library',
+      name='wagtail-library',
       version=_version,
       description='Library features for Wagtail',
       author='Omni Digital',
       author_email='dev@omni-digital.co.uk',
       url='https://github.com/omni-digital/omni-wagtail-library',
       download_url='https://github.com/omni-digital/omni-wagtail-library/tarball/{0}'.format(_version),
-      packages=find_packages(exclude=['app']),
+      packages=find_packages(exclude=['tests']),
       license='MIT',
       classifiers=[
             'Development Status :: 4 - Beta',
@@ -52,6 +52,7 @@ setup(
             'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5'
+            'Programming Language :: Python :: 3.6'
       ],
       include_package_data=True,
       keywords=['wagtail', 'django']

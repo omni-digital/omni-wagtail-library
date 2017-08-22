@@ -15,39 +15,21 @@ DEBUG = True
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
-
-
-# Application definition
-
 INSTALLED_APPS = [
-    'wagtail.wagtailforms',
-    'wagtail.wagtailredirects',
-    'wagtail.wagtailembeds',
-    'wagtail.wagtailsites',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailsnippets',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailsearch',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtailcore',
-    'wagtail.contrib.settings',
+    'wagtail_library',
 
     'modelcluster',
     'taggit',
 
-    'django.contrib.admin',
+    'wagtail.wagtailcore',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailusers',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'omni_wagtail_library',
-
 ]
 
 MIDDLEWARE = MIDDLEWARE_CLASSES = [
@@ -64,7 +46,7 @@ MIDDLEWARE = MIDDLEWARE_CLASSES = [
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'tests.urls'
 
 TEMPLATES = [
     {
@@ -85,56 +67,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'library',
     }
 }
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-]
-
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, 'static'),
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-
-SECRET_KEY = 'ic%0f441td-tx$u&w=+^pa%i+8do0af+svi)6r5$4h0#=w+eew'
-
-# Wagtail settings
-
-WAGTAIL_SITE_NAME = "app"
-
-BASE_URL = 'http://example.com'
+SECRET_KEY = 'supersecret'
