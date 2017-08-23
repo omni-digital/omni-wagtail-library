@@ -1,31 +1,30 @@
 # -*- coding:utf8 -*-
-"""
-Application models
-"""
+"""wagtail_library models"""
 
 from __future__ import unicode_literals
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.fields import RichTextField
 
-from wagtail_library import abstract_models as abstracts
+from wagtail_library import abstract_models
 
 
-class LibraryIndexPage(abstracts.AbstractLibraryIndexPage):
+class LibraryIndex(abstract_models.AbstractLibraryIndex):
     """Library index page."""
     body = RichTextField()
 
-    content_panels = abstracts.AbstractLibraryIndexPage.content_panels + [
+    content_panels = abstract_models.AbstractLibraryIndex.content_panels + [
         FieldPanel('body'),
     ]
-    subpage_types = ['wagtail_library.LibraryItemDetailPage']
+    subpage_types = ['wagtail_library.LibraryDetail']
 
 
-class LibraryItemDetailPage(abstracts.AbstractLibraryItemDetailPage):
+class LibraryDetail(abstract_models.AbstractLibraryDetail):
     """Library item detail page."""
     body = RichTextField()
 
-    parent_page_types = ['wagtail_library.LibraryIndexPage']
-    content_panels = abstracts.AbstractLibraryItemDetailPage.content_panels + [
+    content_panels = abstract_models.AbstractLibraryDetail.content_panels + [
         FieldPanel('body'),
     ]
+    parent_page_types = ['wagtail_library.LibraryIndex']
+    subpage_types = []

@@ -6,24 +6,24 @@ from __future__ import unicode_literals
 from django.test import TestCase
 from wagtail.wagtailcore.blocks import PageChooserBlock
 
-from wagtail_library.blocks import LibraryItemBlock
-from wagtail_library.models import LibraryItemDetailPage
+from wagtail_library.blocks import LibraryDetailBlock
+from wagtail_library.models import LibraryDetail
 
 
-class TestLibraryItemblock(TestCase):
-    """Test for the LibraryItemBlock."""
+class TestLibraryDetailblock(TestCase):
+    """Test for the LibraryDetailBlock."""
     def test_inheritance(self):
         """The block should subclass PageChooserBlock."""
-        self.assertTrue(issubclass(LibraryItemBlock, PageChooserBlock))
+        self.assertTrue(issubclass(LibraryDetailBlock, PageChooserBlock))
 
     def test_template(self):
         """The block should use the correct template."""
         self.assertEqual(
-            LibraryItemBlock._meta_class.template,
-            'wagtail_library/library_item_block.html')
+            LibraryDetailBlock._meta_class.template,
+            'wagtail_library/library_detail_block.html')
 
     def test_target_model(self):
         """The block should have the correct target_model."""
-        block = LibraryItemBlock()
+        block = LibraryDetailBlock()
 
-        self.assertEqual(block.target_model, LibraryItemDetailPage)
+        self.assertEqual(block.target_model, LibraryDetail)

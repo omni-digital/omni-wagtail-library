@@ -13,17 +13,17 @@ from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import RichTextField
 
 from wagtail_library import abstract_models
-from wagtail_library.models import LibraryIndexPage, LibraryItemDetailPage
+from wagtail_library.models import LibraryIndex, LibraryDetail
 
-from tests.factories import LibraryIndexPageFactory, LibraryItemDetailPageFactory
+from tests.factories import LibraryIndexFactory, LibraryDetailFactory
 
 
 BASE_DIR = os.path.join(settings.PROJECT_DIR, 'tests/assets')
 
 
 @override_settings(MEDIA_ROOT=BASE_DIR)
-class TestLibraryIndexPage(TestCase):
-    """Tests for the LibraryIndexPage model."""
+class TestLibraryIndex(TestCase):
+    """Tests for the LibraryIndex model."""
     @staticmethod
     def get_file():
         """
@@ -38,29 +38,29 @@ class TestLibraryIndexPage(TestCase):
         )
 
     def setUp(self):
-        self.index = LibraryIndexPageFactory.create(
+        self.index = LibraryIndexFactory.create(
             paginate_by=10,
             parent=None,
         )
-        self.detail_one = LibraryItemDetailPageFactory.create(
+        self.detail_one = LibraryDetailFactory.create(
             attachment=self.get_file(),
             parent=self.index,
         )
-        self.detail_two = LibraryItemDetailPageFactory.create(
+        self.detail_two = LibraryDetailFactory.create(
             attachment=self.get_file(),
             live=False,
             parent=self.index,
         )
-        self.model = LibraryIndexPage
+        self.model = LibraryIndex
         self.request = RequestFactory().get('')
         self.request.is_preview = False
 
     def test_inheritance(self):
-        """LibraryIndexPage should subclass AbstractLibraryIndexPage."""
+        """LibraryIndex should subclass AbstractLibraryIndex."""
         self.assertTrue(issubclass(self.model, Page))
         self.assertTrue(issubclass(
             self.model,
-            abstract_models.AbstractLibraryIndexPage
+            abstract_models.AbstractLibraryIndex
         ))
 
     def test_paginate_by_field(self):
@@ -110,7 +110,7 @@ class TestLibraryIndexPage(TestCase):
         self.assertNotIn(self.detail_two.pk, ids)
 
     def test_get_context(self):
-        """LibraryIndexPage.get_context should create valid template context."""
+        """LibraryIndex.get_context should create valid template context."""
         context = self.index.get_context(self.request)
 
         self.assertIn('queryset', context)
@@ -139,18 +139,18 @@ class TestLibraryIndexPage(TestCase):
         self.assertEqual(response[0].paginator.num_pages, response[0].number)
 
 
-class TestLibraryItemDetailPage(TestCase):
-    """Test for the LibraryItemDetailPage."""
+class TestLibraryDetail(TestCase):
+    """Test for the LibraryDetail."""
     def setUp(self):
-        super(TestLibraryItemDetailPage, self).setUp()
-        self.model = LibraryItemDetailPage
+        super(TestLibraryDetail, self).setUp()
+        self.model = LibraryDetail
 
     def test_inheritance(self):
-        """LibraryItemDetailPage should subclass AbstractLibraryItemDetailPage."""
+        """LibraryDetail should subclass AbstractLibraryDetail."""
         self.assertTrue(issubclass(self.model, Page))
         self.assertTrue(issubclass(
             self.model,
-            abstract_models.AbstractLibraryItemDetailPage
+            abstract_models.AbstractLibraryDetail
         ))
 
     def test_body_field(self):

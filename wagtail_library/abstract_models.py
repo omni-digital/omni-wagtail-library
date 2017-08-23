@@ -9,7 +9,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.models import Page
 
 
-class AbstractLibraryIndexPage(Page):
+class AbstractLibraryIndex(Page):
     """Abstract library index page."""
     paginate_by = models.PositiveIntegerField(
         blank=True,
@@ -61,7 +61,7 @@ class AbstractLibraryIndexPage(Page):
         :param kwargs: default keyword args
         :return: Context data to use when rendering the template
         """
-        context = super(AbstractLibraryIndexPage, self).get_context(
+        context = super(AbstractLibraryIndex, self).get_context(
             request,
             *args,
             **kwargs
@@ -87,7 +87,7 @@ class AbstractLibraryIndexPage(Page):
         return context
 
 
-class AbstractLibraryItemDetailPage(Page):
+class AbstractLibraryDetail(Page):
     """Abstract library item detail page."""
 
     attachment = models.FileField(upload_to='attachments')
