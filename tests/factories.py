@@ -6,22 +6,22 @@ from factory import Sequence
 
 from wagtail_factories import PageFactory
 
-from wagtail_library.models import LibraryIndexPage, LibraryItemDetailPage
+from wagtail_library.models import LibraryIndex, LibraryDetail
 
 
-class LibraryIndexPageFactory(PageFactory):
+class LibraryIndexFactory(PageFactory):
     title = Sequence('Library index {}'.format)
     body = Sequence('Library index {} body.'.format)
 
     class Meta(object):
         """Factory properties."""
-        model = LibraryIndexPage
+        model = LibraryIndex
 
 
-class LibraryItemDetailPageFactory(PageFactory):
-    title = Sequence('Library item detail {}'.format)
-    body = Sequence('Library item detail {} body.'.format)
+class LibraryDetailFactory(PageFactory):
+    title = Sequence('Library detail {}'.format)
+    body = Sequence('Library detail {} body.'.format)
 
     class Meta(object):
         """Factory properties."""
-        model = LibraryItemDetailPage
+        model = LibraryDetail
