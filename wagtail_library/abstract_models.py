@@ -17,6 +17,7 @@ class AbstractLibraryIndex(Page):
     )
 
     content_panels = Page.content_panels + [FieldPanel('paginate_by')]
+    paginator_class = Paginator
 
     class Meta(object):
         """Django model meta options."""
@@ -35,7 +36,34 @@ class AbstractLibraryIndex(Page):
             children = children.filter(live=True)
         return children
 
-    def _paginate_queryset(self, queryset, page):
+    def get_paginator_class(self):
+        """
+        Returns the class to use for pagination
+
+        :return: Paginator class
+        """
+        return self.paginator_class
+
+    def get_paginator_kwargs(self):
+        """
+        Method for generating a dict of keyword args that will be
+        passed to the paginator constructor
+
+        :param request: HttpRequest instance
+        :return: Dict of keyword arguments to pass to the paginator class constructor
+        """
+        return {}
+
+    def get_paginator(self, *args, **kwargs):
+        """
+        Returns a paginator instance
+
+        :return: Paginator class
+        """
+        paginator_class = self.get_paginator_class()
+        return paginator_class(*args, **kwargs)
+
+    def paginate_queryset(self, queryset, page):
         """
         Helper method for paginating the queryset provided.
 
@@ -43,7 +71,11 @@ class AbstractLibraryIndex(Page):
         :param page: Raw page number taken from the request dict
         :return: Queryset of child model instances
         """
-        paginator = Paginator(queryset, self.paginate_by)
+        paginator = self.get_paginator(
+            queryset,
+            self.paginate_by,
+            **self.get_paginator_kwargs()
+        )
         try:
             queryset = paginator.page(page)
         except PageNotAnInteger:
@@ -73,9 +105,10 @@ class AbstractLibraryIndex(Page):
         # Paginate the child nodes if paginate_by has been specified
         if self.paginate_by:
             is_paginated = True
-            children, paginator = self._paginate_queryset(
+            page_num = request.GET.get('page', 1) or 1
+            children, paginator = self.paginate_queryset(
                 children,
-                request.GET.get('page'),
+                page_num,
             )
 
         context.update(
