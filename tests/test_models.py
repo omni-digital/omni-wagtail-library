@@ -7,8 +7,10 @@ import os
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.paginator import Paginator, Page as PaginatorPage
 from django.db import models
 from django.test import RequestFactory, TestCase, override_settings
+from mock import Mock, patch
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import RichTextField
 
@@ -117,24 +119,67 @@ class TestLibraryIndex(TestCase):
         self.assertIn('children', context)
         self.assertTrue(context.get('is_paginated'))
 
+    def test_get_paginator_class(self):
+        """The default implementation of _get_paginator_class should return djangos paginator"""
+        # Test the default implementation returns the expected class
+        self.assertEqual(self.index.get_paginator_class(), Paginator)
+
+        # Test the overridden implementation returns the expected class
+        self.index.paginator_class = Mock()
+        self.assertEqual(
+            self.index.get_paginator_class(),
+            self.index.paginator_class
+        )
+
+    def test_get_paginator(self):
+        """The _get_paginator method should return a paginator instance"""
+        object_list = ['foo', 'bar', 'baz']
+        paginator = self.index.get_paginator(object_list, 1)
+        self.assertIsInstance(paginator, Paginator)
+        self.assertEqual(paginator.object_list, object_list)
+        self.assertEqual(3, paginator.num_pages)
+
+    def test_paginate_queryset(self):
+        """paginate_queryset should return page and paginator."""
+        self.request.is_preview = True
+        children = self.index._get_children(self.request)
+        page, paginator = self.index.paginate_queryset(children, 1)
+
+        self.assertIsInstance(page, PaginatorPage)
+        self.assertIsInstance(paginator, Paginator)
+        self.assertEqual(paginator.per_page, self.index.paginate_by)
+        self.assertEqual(paginator.num_pages, 1)
+
+    @patch(
+        'wagtail_library.abstract_models.AbstractLibraryIndex.get_paginator_kwargs',
+        Mock(return_value={'foo': 'bar'})
+    )
+    @patch('wagtail_library.abstract_models.AbstractLibraryIndex.get_paginator')
+    def test_paginate_queryset_calls_get_paginator(self, get_paginator):
+        """paginate_queryset should call the get_paginator method."""
+        self.request.is_preview = True
+        children = self.index._get_children(self.request)
+        self.index.paginate_queryset(children, 1)
+        get_paginator.assert_called_with(children, self.index.paginate_by, foo='bar')
+
     def test_paginate_without_qs(self):
         """If now querystrings are provided return the first page."""
         queryset = self.index._get_children(self.request)
-        response = self.index._paginate_queryset(queryset, '')
+        response = self.index.paginate_queryset(queryset, '')
 
         self.assertEqual(response[0].number, 1)
 
     def test_paginate_qs_non_int(self):
         """If page number is not an integer return the first page."""
         queryset = self.index._get_children(self.request)
-        response = self.index._paginate_queryset(queryset, 'foo')
+        response = self.index.paginate_queryset(queryset, 'foo')
 
         self.assertEqual(response[0].number, 1)
 
     def test_paginate_qs_page_empty_page(self):
         """If page number is too large - return the last page."""
         queryset = self.index._get_children(self.request)
-        response = self.index._paginate_queryset(queryset, 2)
+        response = self.index.paginate_queryset(queryset, 2)
 
         self.assertEqual(response[0].paginator.num_pages, response[0].number)
 
