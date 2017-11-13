@@ -23,7 +23,7 @@ class AbstractLibraryIndex(Page):
         """Django model meta options."""
         abstract = True
 
-    def _get_children(self, request):
+    def _get_children(self, request, *args, **kwargs):
         """
         Helper method for getting child nodes to display in the index.
 
@@ -34,7 +34,15 @@ class AbstractLibraryIndex(Page):
         children = model_class.objects.child_of(self)
         if not request.is_preview:
             children = children.filter(live=True)
-        return children
+        return children.filter(**self.get_additional_filter_kwargs(*args, **kwargs))
+
+    def get_additional_filter_kwargs(self, *args, **kwargs):
+        """
+        Method for generating a dict of additional keyword args to be used
+        as filters on the queryset prior to pagination.
+        Takes all the *args and **kwargs that get passed to get_context.
+        """
+        return {}
 
     def get_paginator_class(self):
         """
@@ -98,7 +106,7 @@ class AbstractLibraryIndex(Page):
             *args,
             **kwargs
         )
-        queryset = children = self._get_children(request)
+        queryset = children = self._get_children(request, *args, **kwargs)
         is_paginated = False
         paginator = None
 
