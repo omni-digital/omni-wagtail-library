@@ -183,6 +183,17 @@ class TestLibraryIndex(TestCase):
 
         self.assertEqual(response[0].paginator.num_pages, response[0].number)
 
+    @patch('wagtail_library.abstract_models.AbstractLibraryIndex.get_additional_filter_kwargs')
+    def test_get_children_additional_filters(self, patched_filter):
+        """_get_children should respect additional filters."""
+        self.request.is_preview = False
+        patched_filter.return_value = {
+            'title': self.detail_one.title,
+        }
+        children = self.index._get_children(self.request)
+        self.assertEqual(len(children), 1)
+        self.assertEqual(children[0], self.detail_one)
+
 
 class TestLibraryDetail(TestCase):
     """Test for the LibraryDetail."""
