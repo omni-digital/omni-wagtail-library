@@ -3,8 +3,8 @@
 
 from __future__ import unicode_literals
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
-from wagtail.wagtailcore.fields import RichTextField
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.fields import RichTextField
 
 from wagtail_library import abstract_models
 

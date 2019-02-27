@@ -1,4 +1,4 @@
-from wagtail.wagtailcore.blocks import PageChooserBlock
+from wagtail.core.blocks import PageChooserBlock
 
 
 class LibraryDetailBlock(PageChooserBlock):

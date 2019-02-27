@@ -21,10 +21,10 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
 
-    'wagtail.wagtailcore',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailsites',
-    'wagtail.wagtailusers',
+    'wagtail.core',
+    'wagtail.images',
+    'wagtail.sites',
+    'wagtail.users',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,8 +42,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
-    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'wagtail.core.middleware.SiteMiddleware',
+    'wagtail.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'tests.urls'

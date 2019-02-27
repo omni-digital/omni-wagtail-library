@@ -11,8 +11,8 @@ from django.core.paginator import Paginator, Page as PaginatorPage
 from django.db import models
 from django.test import RequestFactory, TestCase, override_settings
 from mock import Mock, patch
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailcore.fields import RichTextField
+from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField
 
 from wagtail_library import abstract_models
 from wagtail_library.models import LibraryIndex, LibraryDetail
