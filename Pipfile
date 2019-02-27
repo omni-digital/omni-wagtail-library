@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+
+[packages]
+mock = "==2.0.0"
+wagtail = "==1.11.1"
+wagtail-factories = "==0.3.0"
+Django = "==1.11.3"
+psycopg2-binary = "==2.7.7"
+
+[requires]
+python_version = "3.6"
