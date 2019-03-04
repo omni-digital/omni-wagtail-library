@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+pytest = "==4.3.0"
+pytest-django = "==3.4.8"
 
 [packages]
 mock = "==2.0.0"
