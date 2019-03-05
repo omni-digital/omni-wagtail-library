@@ -6,6 +6,8 @@ name = "pypi"
 [dev-packages]
 pytest = "==4.3.0"
 pytest-django = "==3.4.8"
+black = "==18.9b0"
+pre-commit = ">=1.14.4,<1.15"
 
 [packages]
 mock = "==2.0.0"
