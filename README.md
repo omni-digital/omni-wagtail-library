@@ -10,7 +10,7 @@ Wagtail Library requires Django 1.10 or later and Wagtail 1.11 or later.
 
 ### omni-wagtail-library 2.x
 
-Python: 3.6
+Python: 3.5, 3.6
 
 Django: 2.0, 2.1
 
