@@ -10,18 +10,20 @@ from wagtail_library.models import LibraryIndex, LibraryDetail
 
 
 class LibraryIndexFactory(PageFactory):
-    title = Sequence('Library index {}'.format)
-    body = Sequence('Library index {} body.'.format)
+    title = Sequence("Library index {}".format)
+    body = Sequence("Library index {} body.".format)
 
     class Meta(object):
         """Factory properties."""
+
         model = LibraryIndex
 
 
 class LibraryDetailFactory(PageFactory):
-    title = Sequence('Library detail {}'.format)
-    body = Sequence('Library detail {} body.'.format)
+    title = Sequence("Library detail {}".format)
+    body = Sequence("Library detail {} body.".format)
 
     class Meta(object):
         """Factory properties."""
+
         model = LibraryDetail

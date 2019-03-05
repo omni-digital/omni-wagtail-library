@@ -11,33 +11,47 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('wagtailcore', '0030_index_on_pagerevision_created_at'),
-    ]
+    dependencies = [("wagtailcore", "0030_index_on_pagerevision_created_at")]
 
     operations = [
         migrations.CreateModel(
-            name='LibraryDetail',
+            name="LibraryDetail",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('attachment', models.FileField(upload_to='attachments')),
-                ('body', wagtail.core.fields.RichTextField()),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                ("attachment", models.FileField(upload_to="attachments")),
+                ("body", wagtail.core.fields.RichTextField()),
             ],
-            options={
-                'abstract': False,
-            },
-            bases=('wagtailcore.page',),
+            options={"abstract": False},
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='LibraryIndex',
+            name="LibraryIndex",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('paginate_by', models.PositiveIntegerField(blank=True, null=True)),
-                ('body', wagtail.core.fields.RichTextField()),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                ("paginate_by", models.PositiveIntegerField(blank=True, null=True)),
+                ("body", wagtail.core.fields.RichTextField()),
             ],
-            options={
-                'abstract': False,
-            },
-            bases=('wagtailcore.page',),
+            options={"abstract": False},
+            bases=("wagtailcore.page",),
         ),
-]
+    ]

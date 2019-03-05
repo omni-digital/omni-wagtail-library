@@ -12,6 +12,7 @@ from wagtail_library.models import LibraryDetail
 
 class TestLibraryDetailblock(TestCase):
     """Test for the LibraryDetailBlock."""
+
     def test_inheritance(self):
         """The block should subclass PageChooserBlock."""
         self.assertTrue(issubclass(LibraryDetailBlock, PageChooserBlock))
@@ -20,7 +21,8 @@ class TestLibraryDetailblock(TestCase):
         """The block should use the correct template."""
         self.assertEqual(
             LibraryDetailBlock._meta_class.template,
-            'wagtail_library/library_detail_block.html')
+            "wagtail_library/library_detail_block.html",
+        )
 
     def test_target_model(self):
         """The block should have the correct target_model."""

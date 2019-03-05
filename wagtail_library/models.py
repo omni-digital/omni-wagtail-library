@@ -11,20 +11,22 @@ from wagtail_library import abstract_models
 
 class LibraryIndex(abstract_models.AbstractLibraryIndex):
     """Library index page."""
+
     body = RichTextField()
 
     content_panels = abstract_models.AbstractLibraryIndex.content_panels + [
-        FieldPanel('body'),
+        FieldPanel("body")
     ]
-    subpage_types = ['wagtail_library.LibraryDetail']
+    subpage_types = ["wagtail_library.LibraryDetail"]
 
 
 class LibraryDetail(abstract_models.AbstractLibraryDetail):
     """Library item detail page."""
+
     body = RichTextField()
 
     content_panels = abstract_models.AbstractLibraryDetail.content_panels + [
-        FieldPanel('body'),
+        FieldPanel("body")
     ]
-    parent_page_types = ['wagtail_library.LibraryIndex']
+    parent_page_types = ["wagtail_library.LibraryIndex"]
     subpage_types = []
