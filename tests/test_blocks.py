@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase
-from wagtail.wagtailcore.blocks import PageChooserBlock
+from wagtail.core.blocks import PageChooserBlock
 
 from wagtail_library.blocks import LibraryDetailBlock
 from wagtail_library.models import LibraryDetail

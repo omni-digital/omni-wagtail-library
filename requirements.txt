@@ -1,4 +1,0 @@
-django==1.11.3
-mock==2.0.0
-wagtail==1.11.1
-wagtail-factories==0.3.0
