@@ -4,15 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+black = "==18.9b0"
+mock = "==2.0.0"
+pre-commit = ">=1.14.4,<1.15"
 pytest = "==4.3.0"
 pytest-django = "==3.4.8"
-black = "==18.9b0"
-pre-commit = ">=1.14.4,<1.15"
+wagtail-factories = "==1.1.0"
 
 [packages]
-mock = "==2.0.0"
 wagtail = "==2.4"
-wagtail-factories = "==1.1.0"
 Django = "==2.1.7"
 psycopg2-binary = "==2.7.7"
 
