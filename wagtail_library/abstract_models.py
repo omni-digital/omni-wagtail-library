@@ -11,16 +11,15 @@ from wagtail.core.models import Page
 
 class AbstractLibraryIndex(Page):
     """Abstract library index page."""
-    paginate_by = models.PositiveIntegerField(
-        blank=True,
-        null=True
-    )
 
-    content_panels = Page.content_panels + [FieldPanel('paginate_by')]
+    paginate_by = models.PositiveIntegerField(blank=True, null=True)
+
+    content_panels = Page.content_panels + [FieldPanel("paginate_by")]
     paginator_class = Paginator
 
     class Meta(object):
         """Django model meta options."""
+
         abstract = True
 
     def _get_children(self, request, *args, **kwargs):
@@ -79,11 +78,7 @@ class AbstractLibraryIndex(Page):
         :param page: Raw page number taken from the request dict
         :return: Queryset of child model instances
         """
-        paginator = self.get_paginator(
-            queryset,
-            self.paginate_by,
-            **self.get_paginator_kwargs()
-        )
+        paginator = self.get_paginator(queryset, self.paginate_by, **self.get_paginator_kwargs())
         try:
             queryset = paginator.page(page)
         except PageNotAnInteger:
@@ -101,11 +96,7 @@ class AbstractLibraryIndex(Page):
         :param kwargs: default keyword args
         :return: Context data to use when rendering the template
         """
-        context = super(AbstractLibraryIndex, self).get_context(
-            request,
-            *args,
-            **kwargs
-        )
+        context = super(AbstractLibraryIndex, self).get_context(request, *args, **kwargs)
         queryset = children = self._get_children(request, *args, **kwargs)
         is_paginated = False
         paginator = None
@@ -113,17 +104,11 @@ class AbstractLibraryIndex(Page):
         # Paginate the child nodes if paginate_by has been specified
         if self.paginate_by:
             is_paginated = True
-            page_num = request.GET.get('page', 1) or 1
-            children, paginator = self.paginate_queryset(
-                children,
-                page_num,
-            )
+            page_num = request.GET.get("page", 1) or 1
+            children, paginator = self.paginate_queryset(children, page_num)
 
         context.update(
-            queryset=queryset,
-            children=children,
-            paginator=paginator,
-            is_paginated=is_paginated
+            queryset=queryset, children=children, paginator=paginator, is_paginated=is_paginated
         )
         return context
 
@@ -131,9 +116,10 @@ class AbstractLibraryIndex(Page):
 class AbstractLibraryDetail(Page):
     """Abstract library item detail page."""
 
-    attachment = models.FileField(upload_to='attachments')
-    content_panels = Page.content_panels + [FieldPanel('attachment')]
+    attachment = models.FileField(upload_to="attachments")
+    content_panels = Page.content_panels + [FieldPanel("attachment")]
 
     class Meta(object):
         """Django properties."""
+
         abstract = True

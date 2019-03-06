@@ -3,7 +3,8 @@ from wagtail.core.blocks import PageChooserBlock
 
 class LibraryDetailBlock(PageChooserBlock):
     """Library detail chooser block for streamfield."""
-    def __init__(self, target_model='wagtail_library.LibraryDetail', **kwargs):
+
+    def __init__(self, target_model="wagtail_library.LibraryDetail", **kwargs):
         """
         Initialization code
 
@@ -14,4 +15,5 @@ class LibraryDetailBlock(PageChooserBlock):
 
     class Meta(object):
         """Block meta."""
-        template = 'wagtail_library/library_detail_block.html'
+
+        template = "wagtail_library/library_detail_block.html"
