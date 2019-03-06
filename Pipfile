@@ -10,6 +10,7 @@ pre-commit = ">=1.14.4,<1.15"
 pytest = "==4.3.0"
 pytest-django = "==3.4.8"
 wagtail-factories = "==1.1.0"
+pyyaml = "==4.2b1"
 
 [packages]
 wagtail = "==2.4"
