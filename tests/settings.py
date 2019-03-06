@@ -61,9 +61,7 @@ TEMPLATES = [
     }
 ]
 
-DATABASES = {
-    "default": {"ENGINE": "django.db.backends.postgresql_psycopg2", "NAME": "library"}
-}
+DATABASES = {"default": {"ENGINE": "django.db.backends.postgresql_psycopg2", "NAME": "library"}}
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"

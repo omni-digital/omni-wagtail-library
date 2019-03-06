@@ -1,0 +1,4 @@
+[tool.black]
+line-length = 100
+safe = true
+py36 = true

@@ -78,9 +78,7 @@ class AbstractLibraryIndex(Page):
         :param page: Raw page number taken from the request dict
         :return: Queryset of child model instances
         """
-        paginator = self.get_paginator(
-            queryset, self.paginate_by, **self.get_paginator_kwargs()
-        )
+        paginator = self.get_paginator(queryset, self.paginate_by, **self.get_paginator_kwargs())
         try:
             queryset = paginator.page(page)
         except PageNotAnInteger:
@@ -98,9 +96,7 @@ class AbstractLibraryIndex(Page):
         :param kwargs: default keyword args
         :return: Context data to use when rendering the template
         """
-        context = super(AbstractLibraryIndex, self).get_context(
-            request, *args, **kwargs
-        )
+        context = super(AbstractLibraryIndex, self).get_context(request, *args, **kwargs)
         queryset = children = self._get_children(request, *args, **kwargs)
         is_paginated = False
         paginator = None
@@ -112,10 +108,7 @@ class AbstractLibraryIndex(Page):
             children, paginator = self.paginate_queryset(children, page_num)
 
         context.update(
-            queryset=queryset,
-            children=children,
-            paginator=paginator,
-            is_paginated=is_paginated,
+            queryset=queryset, children=children, paginator=paginator, is_paginated=is_paginated
         )
         return context
 

@@ -12,8 +12,7 @@ from setuptools import setup, find_packages
 # Source: https://packaging.python.org/single_source_version/
 def read(*names, **kwargs):
     with io.open(
-        os.path.join(os.path.dirname(__file__), *names),
-        encoding=kwargs.get("encoding", "utf8"),
+        os.path.join(os.path.dirname(__file__), *names), encoding=kwargs.get("encoding", "utf8")
     ) as fp:
         return fp.read()
 

@@ -42,9 +42,7 @@ class TestLibraryIndex(TestCase):
 
     def setUp(self):
         self.index = LibraryIndexFactory.create(paginate_by=10, parent=None)
-        self.detail_one = LibraryDetailFactory.create(
-            attachment=self.get_file(), parent=self.index
-        )
+        self.detail_one = LibraryDetailFactory.create(attachment=self.get_file(), parent=self.index)
         self.detail_two = LibraryDetailFactory.create(
             attachment=self.get_file(), live=False, parent=self.index
         )
@@ -73,9 +71,7 @@ class TestLibraryIndex(TestCase):
 
     def test_content_panels(self):
         """The content_panels should include the paginate_by & body fields."""
-        self.assertIn(
-            "paginate_by", [panel.field_name for panel in self.model.content_panels]
-        )
+        self.assertIn("paginate_by", [panel.field_name for panel in self.model.content_panels])
         self.assertIn("body", [panel.field_name for panel in self.model.content_panels])
 
     def test_get_children_preview_mode(self):
@@ -162,9 +158,7 @@ class TestLibraryIndex(TestCase):
 
         self.assertEqual(response[0].paginator.num_pages, response[0].number)
 
-    @patch(
-        "wagtail_library.abstract_models.AbstractLibraryIndex.get_additional_filter_kwargs"
-    )
+    @patch("wagtail_library.abstract_models.AbstractLibraryIndex.get_additional_filter_kwargs")
     def test_get_children_additional_filters(self, patched_filter):
         """_get_children should respect additional filters."""
         self.request.is_preview = False
@@ -194,7 +188,5 @@ class TestLibraryDetail(TestCase):
 
     def test_content_panels(self):
         """The content_panels should include the body & attachment fields."""
-        self.assertIn(
-            "attachment", [panel.field_name for panel in self.model.content_panels]
-        )
+        self.assertIn("attachment", [panel.field_name for panel in self.model.content_panels])
         self.assertIn("body", [panel.field_name for panel in self.model.content_panels])

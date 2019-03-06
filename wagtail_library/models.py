@@ -14,9 +14,7 @@ class LibraryIndex(abstract_models.AbstractLibraryIndex):
 
     body = RichTextField()
 
-    content_panels = abstract_models.AbstractLibraryIndex.content_panels + [
-        FieldPanel("body")
-    ]
+    content_panels = abstract_models.AbstractLibraryIndex.content_panels + [FieldPanel("body")]
     subpage_types = ["wagtail_library.LibraryDetail"]
 
 
@@ -25,8 +23,6 @@ class LibraryDetail(abstract_models.AbstractLibraryDetail):
 
     body = RichTextField()
 
-    content_panels = abstract_models.AbstractLibraryDetail.content_panels + [
-        FieldPanel("body")
-    ]
+    content_panels = abstract_models.AbstractLibraryDetail.content_panels + [FieldPanel("body")]
     parent_page_types = ["wagtail_library.LibraryIndex"]
     subpage_types = []

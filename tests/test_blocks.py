@@ -20,8 +20,7 @@ class TestLibraryDetailblock(TestCase):
     def test_template(self):
         """The block should use the correct template."""
         self.assertEqual(
-            LibraryDetailBlock._meta_class.template,
-            "wagtail_library/library_detail_block.html",
+            LibraryDetailBlock._meta_class.template, "wagtail_library/library_detail_block.html"
         )
 
     def test_target_model(self):
