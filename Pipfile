@@ -13,7 +13,7 @@ wagtail-factories = "==1.1.0"
 pyyaml = "==4.2b1"
 
 [packages]
-wagtail = "==2.4"
+wagtail = "==2.7.4"
 Django = "==2.1.7"
 psycopg2-binary = "==2.7.7"
 
